@@ -7,7 +7,7 @@ COPY Game /usr/share/nginx/html/index.html
 # Stage 2: Build the Telegram bot
 FROM node:14 AS bot
 WORKDIR /app
-COPY . .
+COPY Bot /app
 RUN npm install
 
 # Final stage: Combine both
