@@ -10,6 +10,7 @@ const bot = new TelegramBot(TOKEN, {
 const port = process.env.PORT || 5000;
 const gameName = "fridgeTestGame";
 const queries = {};
+const gameUrl = process.env.GAME_URL || "http://localhost:80";
 
 server.use(express.static(path.join(__dirname, 'FridgeHost')));
 bot.onText(/help/, (msg) => bot.sendMessage(msg.from.id, "Say /game if you want to play."));
@@ -20,10 +21,9 @@ bot.on("callback_query", function (query) {
         bot.answerCallbackQuery(query.id, "Sorry, '" + query.game_short_name + "' is not available.");
     } else {
         queries[query.id] = query;
-        let gameurl = "http://localhost:80";
         bot.answerCallbackQuery({
             callback_query_id: query.id,
-            url: gameurl
+            url: gameUrl
         });
     }
 });
