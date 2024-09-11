@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const TelegramBot = require("node-telegram-bot-api");
-const TOKEN = "YOUR_TELEGRAM_BOT_TOKEN";
+const TOKEN = "7540708072:AAEArLeZEv8JHLjPWLI990tJFytaH9Gw5CQ";
 const server = express();
 const bot = new TelegramBot(TOKEN, {
     polling: true
@@ -10,7 +10,7 @@ const bot = new TelegramBot(TOKEN, {
 const port = process.env.PORT || 5000;
 const gameName = "fridgeTestGame";
 const queries = {};
-const gameUrl = process.env.GAME_URL || "http://localhost:80";
+const gameUrl = process.env.GAME_URL; // || "http://localhost:80"
 
 server.use(express.static(path.join(__dirname, 'FridgeHost')));
 bot.onText(/help/, (msg) => bot.sendMessage(msg.from.id, "Say /game if you want to play."));
