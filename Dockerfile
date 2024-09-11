@@ -13,6 +13,7 @@ RUN npm install
 RUN npm i node-telegram-bot-api
 RUN npm install telegraf
 RUN npm install express --save
+RUN npm install public-ip
 
 CMD ["npm", "start"]
 
