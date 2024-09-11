@@ -10,7 +10,7 @@ const bot = new TelegramBot(TOKEN, {
 const port = process.env.PORT || 5000;
 const gameName = "fridgeTestGame";
 const queries = {};
-const gameUrl = process.env.GAME_URL; // || "http://localhost:80"
+const gameUrl = process.env.GAME_URL || "http://localhost:80"; // 
 
 server.use(express.static(path.join(__dirname, 'FridgeHost')));
 bot.onText(/help/, (msg) => bot.sendMessage(msg.from.id, "Say /game if you want to play."));
