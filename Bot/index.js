@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
-const TelegramBot = require("node-telegram-bot-api");
-const TOKEN = "7540708072:AAEArLeZEv8JHLjPWLI990tJFytaH9Gw5CQ";
+const TelegramBot = require("7540708072:AAEArLeZEv8JHLjPWLI990tJFytaH9Gw5CQ");
+const TOKEN = process.env.TELEGRAM_TOKEN;
 const server = express();
 const bot = new TelegramBot(TOKEN, {
     polling: true
@@ -10,7 +10,6 @@ const bot = new TelegramBot(TOKEN, {
 const port = process.env.PORT || 5000;
 const gameName = "fridgeTestGame";
 const queries = {};
-const gameUrl = process.env.GAME_URL || "http://localhost:80"; // 
 
 server.use(express.static(path.join(__dirname, 'FridgeHost')));
 bot.onText(/help/, (msg) => bot.sendMessage(msg.from.id, "Say /game if you want to play."));
@@ -21,9 +20,10 @@ bot.on("callback_query", function (query) {
         bot.answerCallbackQuery(query.id, "Sorry, '" + query.game_short_name + "' is not available.");
     } else {
         queries[query.id] = query;
+        let gameurl = "http://localhost";
         bot.answerCallbackQuery({
             callback_query_id: query.id,
-            url: gameUrl
+            url: gameurl
         });
     }
 });

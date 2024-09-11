@@ -1,29 +1,20 @@
-# Используем официальный образ Node.js для бота
+# Use multi-stage builds to combine both services
+
+# Stage 1: Build the website
+FROM nginx:alpine AS website
+COPY ./index.html /usr/share/nginx/html/index.html
+
+# Stage 2: Build the Telegram bot
 FROM node:14 AS bot
-
-# Устанавливаем рабочую директорию для бота
-WORKDIR /usr/src/bot
-
-# Копируем файлы бота в контейнер
-COPY Bot/package*.json ./
-COPY Bot/index.js ./
-
-# Устанавливаем зависимости и запускаем бота
+WORKDIR /app
+COPY . .
 RUN npm install
-RUN npm i node-telegram-bot-api
-RUN npm install telegraf
-RUN npm install express --save
 
-CMD ["npm", "start"]
-
-# Используем официальный образ Nginx для хостинга игры
-FROM nginx:alpine AS web
-
-# Копируем файлы игры в директорию Nginx
-COPY Game /usr/share/nginx/html
-
-# Указываем, что контейнер будет использовать порт 80
-EXPOSE 80
-
-# Запускаем Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Final stage: Combine both
+FROM nginx:alpine
+COPY --from=website /usr/share/nginx/html /usr/share/nginx/html
+COPY --from=bot /app /app
+WORKDIR /app
+ENV TELEGRAM_TOKEN=YOUR_BOT_TOKEN
+ENV WEBSITE_URL=http://localhost
+CMD ["sh", "-c", "nginx && npm start"]
