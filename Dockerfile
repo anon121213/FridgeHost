@@ -2,7 +2,7 @@
 
 # Stage 1: Build the website
 FROM nginx:alpine AS website
-COPY Game/index.html /usr/share/nginx/html/index.html
+COPY Game /usr/share/nginx/html/index.html
 
 # Stage 2: Build the Telegram bot
 FROM node:14 AS bot
