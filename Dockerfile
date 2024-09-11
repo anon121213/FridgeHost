@@ -27,5 +27,3 @@ EXPOSE 80
 
 # Запускаем Nginx
 CMD ["nginx", "-g", "daemon off;"]
-
-# Используем Docker Compose для запуска обоих контейнеров docker-compose up --build

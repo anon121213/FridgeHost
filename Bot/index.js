@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const TelegramBot = require("node-telegram-bot-api");
-const TOKEN = "7540708072:AAEArLeZEv8JHLjPWLI990tJFytaH9Gw5CQ";
+const TOKEN = "YOUR_TELEGRAM_BOT_TOKEN";
 const server = express();
 const bot = new TelegramBot(TOKEN, {
     polling: true
@@ -20,7 +20,7 @@ bot.on("callback_query", function (query) {
         bot.answerCallbackQuery(query.id, "Sorry, '" + query.game_short_name + "' is not available.");
     } else {
         queries[query.id] = query;
-        let gameurl = "https://anon121213.github.io/FridgeHost/";
+        let gameurl = "http://localhost:80";
         bot.answerCallbackQuery({
             callback_query_id: query.id,
             url: gameurl
